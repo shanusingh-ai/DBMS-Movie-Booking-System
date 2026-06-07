@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}{{ mode }} Movie | MovieBook{% endblock %}
+
+{% block content %}
+<section class="admin-shell">
+    <div class="container">
+        {% include "admin/_nav.html" %}
+        <div class="admin-heading">
+            <div>
+                <p class="section-kicker">{{ mode }} movie</p>
+                <h1>{{ mode }} catalog entry</h1>
+            </div>
+            <a class="btn btn-outline-light" href="{{ url_for('admin_movies') }}">Back</a>
+        </div>
+
+        <form method="post" class="admin-form" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <label>Title
+                        <input class="form-control" name="title" value="{{ movie.title if movie else '' }}" required>
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <label>Release year
+                        <input class="form-control" name="release_year" value="{{ movie.release_year if movie else '' }}" required>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label>Genre
+                        <input class="form-control" name="genre" value="{{ movie.genre if movie else '' }}" required>
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <label>Language
+                        <input class="form-control" name="language" value="{{ movie.language if movie else 'English' }}">
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <label>Duration
+                        <input class="form-control" name="duration" value="{{ movie.duration if movie else '120 min' }}">
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <label>Rating
+                        <input class="form-control" type="number" step="0.1" min="0" max="10" name="rating" value="{{ movie.rating if movie else '0' }}">
+                    </label>
+                </div>
+                <div class="col-md-8">
+                    <label>Poster URL
+                        <input class="form-control" type="url" name="poster_url" value="{{ movie.poster_url if movie else '' }}">
+                    </label>
+                </div>
+                <div class="col-12">
+                    <label>Plot
+                        <textarea class="form-control" name="plot" rows="5" required>{{ movie.plot if movie else '' }}</textarea>
+                    </label>
+                </div>
+            </div>
+            <button class="btn btn-brand" type="submit">Save movie</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+<div class="admin-tabs">
+    <a href="{{ url_for('admin_dashboard') }}" class="{% if request.endpoint == 'admin_dashboard' %}active{% endif %}">
+        <i class="bi bi-speedometer2"></i> Overview
+    </a>
+    <a href="{{ url_for('admin_movies') }}" class="{% if 'movie' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-film"></i> Movies
+    </a>
+    <a href="{{ url_for('admin_theaters') }}" class="{% if 'theater' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-building"></i> Theaters
+    </a>
+    <a href="{{ url_for('admin_shows') }}" class="{% if 'show' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-calendar2-week"></i> Shows
+    </a>
+    <a href="{{ url_for('admin_bookings') }}" class="{% if request.endpoint == 'admin_bookings' %}active{% endif %}">
+        <i class="bi bi-ticket-detailed"></i> Bookings
+    </a>
+    <a href="{{ url_for('admin_users') }}" class="{% if request.endpoint == 'admin_users' %}active{% endif %}">
+        <i class="bi bi-people"></i> Users
+    </a>
+</div>

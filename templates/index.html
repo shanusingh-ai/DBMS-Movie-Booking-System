@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Movies | Online Movie Ticket Booking System{% endblock %}
+
+{% block content %}
+<section class="home-hero">
+    <div class="container">
+        <div class="row align-items-end g-4">
+            <div class="col-lg-7">
+                <p class="section-kicker">Now showing</p>
+                <h1>Online Movie Ticket Booking System</h1>
+                <p class="hero-copy">Browse movies, choose a theater, select seats, and confirm tickets in a few clicks.</p>
+                <form class="hero-search" action="{{ url_for('index') }}">
+                    <i class="bi bi-search"></i>
+                    <input type="search" name="q" placeholder="Search by movie or genre" value="{{ query_text }}">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <div class="col-lg-5">
+                {% if featured %}
+                <div class="poster-strip">
+                    {% for movie in featured %}
+                    <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster">
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="toolbar-row">
+            <div>
+                <p class="section-kicker">Discover</p>
+                <h2>{% if query_text %}Results for "{{ query_text }}"{% else %}Recommended movies{% endif %}</h2>
+            </div>
+            <form class="filter-row" action="{{ url_for('index') }}">
+                <input type="hidden" name="q" value="{{ query_text }}">
+                <select class="form-select" name="genre" onchange="this.form.submit()">
+                    <option value="">All genres</option>
+                    {% for genre in genres %}
+                        <option value="{{ genre }}" {% if selected_genre == genre %}selected{% endif %}>{{ genre }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        {% if movies %}
+        <div class="movie-grid">
+            {% for movie in movies %}
+            <article class="movie-card">
+                <a href="{{ url_for('movie_details', movie_id=movie.id) }}" class="poster-link">
+                    <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster">
+                    <span class="rating-pill"><i class="bi bi-star-fill"></i> {{ "%.1f"|format(movie.rating or 0) }}</span>
+                </a>
+                <div class="movie-card-body">
+                    <h3>{{ movie.title }}</h3>
+                    <p>{{ movie.genre }}</p>
+                    <div class="movie-meta">
+                        <span>{{ movie.release_year }}</span>
+                        <a href="{{ url_for('movie_details', movie_id=movie.id) }}">Book</a>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-film"></i>
+            <h2>No movies found</h2>
+            <p>Try another title or add movies from the admin panel.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

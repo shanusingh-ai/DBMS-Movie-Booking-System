@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} | MovieBook{% endblock %}
+
+{% block content %}
+<section class="content-section">
+    <div class="container">
+        <div class="empty-state">
+            <span class="error-code">{{ code }}</span>
+            <h1>{{ title }}</h1>
+            <p>The page could not be loaded. Return to movies and continue from there.</p>
+            <a class="btn btn-brand" href="{{ url_for('index') }}">Go to movies</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

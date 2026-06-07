@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Login | MovieBook{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-panel">
+        <p class="section-kicker">Admin access</p>
+        <h1>Control center</h1>
+        <form method="post" class="stacked-form" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label>
+                Email
+                <input class="form-control" type="email" name="email" value="{{ form.email if form else '' }}" required>
+            </label>
+            <label>
+                Password
+                <input class="form-control" type="password" name="password" required>
+            </label>
+            <button class="btn btn-brand w-100" type="submit">Login as admin</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

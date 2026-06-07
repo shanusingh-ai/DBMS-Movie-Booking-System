@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | MovieBook{% endblock %}
+
+{% block content %}
+<section class="dashboard-hero">
+    <div class="container">
+        <div>
+            <p class="section-kicker">My dashboard</p>
+            <h1>Hello, {{ current_user.name }}</h1>
+            <p>Track your bookings and upcoming shows.</p>
+        </div>
+        <div class="dashboard-stats">
+            <div>
+                <strong>{{ bookings|length }}</strong>
+                <span>Total bookings</span>
+            </div>
+            <div>
+                <strong>{{ upcoming_count }}</strong>
+                <span>Upcoming</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="toolbar-row">
+            <div>
+                <p class="section-kicker">History</p>
+                <h2>Your tickets</h2>
+            </div>
+            <a class="btn btn-brand" href="{{ url_for('index') }}">Browse movies</a>
+        </div>
+
+        {% if bookings %}
+        <div class="booking-history">
+            {% for booking in bookings %}
+            <article class="history-item">
+                <img src="{{ booking.show.movie.poster_url }}" alt="{{ booking.show.movie.title }} poster">
+                <div>
+                    <h3>{{ booking.show.movie.title }}</h3>
+                    <p>{{ booking.show.theater.name }} · {{ booking.show.theater.city }}</p>
+                    <div class="show-meta">
+                        <span>{{ booking.show.show_date|show_date }}</span>
+                        <span>{{ booking.show.show_time|show_time }}</span>
+                        <span>{{ booking.seat_label }}</span>
+                    </div>
+                </div>
+                <div class="history-action">
+                    <strong>{{ booking.total_amount|currency }}</strong>
+                    <a href="{{ url_for('booking_confirmation', booking_code=booking.booking_code) }}">View ticket</a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-ticket-perforated"></i>
+            <h2>No bookings yet</h2>
+            <p>Your confirmed tickets will appear here.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

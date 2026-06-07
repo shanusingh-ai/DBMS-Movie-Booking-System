@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Book {{ show.movie.title }} | MovieBook{% endblock %}
+
+{% block content %}
+<section class="booking-shell">
+    <div class="container">
+        <div class="booking-header">
+            <div>
+                <p class="section-kicker">Seat selection</p>
+                <h1>{{ show.movie.title }}</h1>
+                <p>{{ show.theater.name }} · {{ show.show_date|show_date }} · {{ show.show_time|show_time }}</p>
+            </div>
+            <div class="price-chip">{{ show.price|currency }} per seat</div>
+        </div>
+
+        <form method="post" class="booking-layout" id="bookingForm">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="selected_seats" id="selectedSeatsInput" value="{{ selected_seats|join(',') }}">
+
+            <div class="seat-panel">
+                <div class="screen">Screen</div>
+                <div class="seat-map" data-price="{{ show.price }}">
+                    {% for row in seat_matrix %}
+                    <div class="seat-row">
+                        <span class="row-label">{{ row[0].number[0] }}</span>
+                        <div class="seat-buttons">
+                            {% for seat in row %}
+                            <button
+                                class="seat-btn {% if seat.booked %}booked{% endif %} {% if seat.number in selected_seats %}selected{% endif %}"
+                                type="button"
+                                data-seat="{{ seat.number }}"
+                                {% if seat.booked %}disabled{% endif %}
+                                aria-label="Seat {{ seat.number }}">
+                                {{ seat.number }}
+                            </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="seat-legend">
+                    <span><i class="legend-box available"></i>Available</span>
+                    <span><i class="legend-box selected"></i>Selected</span>
+                    <span><i class="legend-box booked"></i>Booked</span>
+                </div>
+            </div>
+
+            <aside class="summary-panel">
+                <h2>Ticket summary</h2>
+                <div class="summary-line">
+                    <span>Seats</span>
+                    <strong id="selectedSeatText">None</strong>
+                </div>
+                <div class="summary-line">
+                    <span>Quantity</span>
+                    <strong id="seatCount">0</strong>
+                </div>
+                <div class="summary-line total">
+                    <span>Total</span>
+                    <strong id="bookingTotal">Rs. 0.00</strong>
+                </div>
+                <button class="btn btn-brand w-100" type="submit">
+                    <i class="bi bi-check2-circle"></i>
+                    Confirm booking
+                </button>
+            </aside>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/booking.js') }}"></script>
+{% endblock %}

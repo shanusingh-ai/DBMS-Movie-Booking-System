@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}{{ mode }} Theater | MovieBook{% endblock %}
+
+{% block content %}
+<section class="admin-shell">
+    <div class="container">
+        {% include "admin/_nav.html" %}
+        <div class="admin-heading">
+            <div>
+                <p class="section-kicker">{{ mode }} theater</p>
+                <h1>{{ mode }} cinema location</h1>
+            </div>
+            <a class="btn btn-outline-light" href="{{ url_for('admin_theaters') }}">Back</a>
+        </div>
+
+        <form method="post" class="admin-form" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label>Name
+                        <input class="form-control" name="name" value="{{ theater.name if theater else '' }}" required>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label>City
+                        <input class="form-control" name="city" value="{{ theater.city if theater else '' }}" required>
+                    </label>
+                </div>
+                <div class="col-12">
+                    <label>Address
+                        <input class="form-control" name="address" value="{{ theater.address if theater else '' }}" required>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label>Seat rows
+                        <input class="form-control" name="rows" value="{{ theater.rows if theater else 'A,B,C,D,E,F,G,H' }}">
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label>Seats per row
+                        <input class="form-control" type="number" min="1" max="30" name="seats_per_row" value="{{ theater.seats_per_row if theater else 10 }}">
+                    </label>
+                </div>
+            </div>
+            <button class="btn btn-brand" type="submit">Save theater</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

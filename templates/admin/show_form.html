@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}{{ mode }} Show | MovieBook{% endblock %}
+
+{% block content %}
+<section class="admin-shell">
+    <div class="container">
+        {% include "admin/_nav.html" %}
+        <div class="admin-heading">
+            <div>
+                <p class="section-kicker">{{ mode }} show</p>
+                <h1>{{ mode }} show timing</h1>
+            </div>
+            <a class="btn btn-outline-light" href="{{ url_for('admin_shows') }}">Back</a>
+        </div>
+
+        <form method="post" class="admin-form" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label>Movie
+                        <select class="form-select" name="movie_id" required>
+                            <option value="">Select movie</option>
+                            {% for movie in movies %}
+                                <option value="{{ movie.id }}" {% if show and show.movie_id == movie.id %}selected{% endif %}>{{ movie.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label>Theater
+                        <select class="form-select" name="theater_id" required>
+                            <option value="">Select theater</option>
+                            {% for theater in theaters %}
+                                <option value="{{ theater.id }}" {% if show and show.theater_id == theater.id %}selected{% endif %}>{{ theater.name }} · {{ theater.city }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <label>Date
+                        <input class="form-control" type="date" name="show_date" value="{{ show.show_date.isoformat() if show and show.show_date else '' }}" required>
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <label>Time
+                        <input class="form-control" type="time" name="show_time" value="{{ show.show_time.strftime('%H:%M') if show and show.show_time else '' }}" required>
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <label>Price
+                        <input class="form-control" type="number" min="1" step="0.01" name="price" value="{{ show.price if show else '180.00' }}" required>
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <label>Status
+                        <select class="form-select" name="status">
+                            {% for status in ["Scheduled", "Cancelled", "Completed"] %}
+                                <option value="{{ status }}" {% if show and show.status == status %}selected{% endif %}>{{ status }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <button class="btn btn-brand" type="submit">Save show</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

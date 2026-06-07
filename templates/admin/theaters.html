@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Theaters | MovieBook{% endblock %}
+
+{% block content %}
+<section class="admin-shell">
+    <div class="container">
+        {% include "admin/_nav.html" %}
+        <div class="admin-heading">
+            <div>
+                <p class="section-kicker">Theaters</p>
+                <h1>Manage cinema locations</h1>
+            </div>
+            <a class="btn btn-brand" href="{{ url_for('admin_theater_add') }}">Add theater</a>
+        </div>
+
+        <div class="table-panel">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>Seats</th>
+                            <th>Address</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for theater in theaters %}
+                        <tr>
+                            <td>{{ theater.name }}</td>
+                            <td>{{ theater.city }}</td>
+                            <td>{{ theater.total_seats }}</td>
+                            <td>{{ theater.address }}</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-light" href="{{ url_for('admin_theater_edit', theater_id=theater.id) }}">Edit</a>
+                                <form class="inline-form" method="post" action="{{ url_for('admin_theater_delete', theater_id=theater.id) }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button class="btn btn-sm btn-outline-danger" type="submit" data-confirm="Delete this theater?">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5" class="text-center text-secondary">No theaters added yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

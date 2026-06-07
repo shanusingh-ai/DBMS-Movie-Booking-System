@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up | MovieBook{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-panel wide">
+        <p class="section-kicker">Create account</p>
+        <h1>Start booking faster</h1>
+        <form method="post" class="stacked-form" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label>
+                        Full name
+                        <input class="form-control" type="text" name="name" value="{{ form.name if form else '' }}" required>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label>
+                        Phone
+                        <input class="form-control" type="tel" name="phone" value="{{ form.phone if form else '' }}">
+                    </label>
+                </div>
+                <div class="col-12">
+                    <label>
+                        Email
+                        <input class="form-control" type="email" name="email" value="{{ form.email if form else '' }}" required>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label>
+                        Password
+                        <input class="form-control" type="password" name="password" minlength="8" required>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label>
+                        Confirm password
+                        <input class="form-control" type="password" name="confirm_password" minlength="8" required>
+                    </label>
+                </div>
+            </div>
+            <button class="btn btn-brand w-100" type="submit">Create account</button>
+        </form>
+        <div class="auth-switch">
+            <span>Already registered?</span>
+            <a href="{{ url_for('login') }}">Login</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

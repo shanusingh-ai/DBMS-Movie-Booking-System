@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Movies | MovieBook{% endblock %}
+
+{% block content %}
+<section class="admin-shell">
+    <div class="container">
+        {% include "admin/_nav.html" %}
+        <div class="admin-heading">
+            <div>
+                <p class="section-kicker">Movies</p>
+                <h1>Manage movie catalog</h1>
+            </div>
+            <a class="btn btn-brand" href="{{ url_for('admin_movie_add') }}">Add movie</a>
+        </div>
+
+        <div class="table-panel">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Movie</th>
+                            <th>Genre</th>
+                            <th>Year</th>
+                            <th>Rating</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for movie in movies %}
+                        <tr>
+                            <td>
+                                <div class="table-movie">
+                                    <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster">
+                                    <span>{{ movie.title }}</span>
+                                </div>
+                            </td>
+                            <td>{{ movie.genre }}</td>
+                            <td>{{ movie.release_year }}</td>
+                            <td>{{ "%.1f"|format(movie.rating or 0) }}</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-light" href="{{ url_for('admin_movie_edit', movie_id=movie.id) }}">Edit</a>
+                                <form class="inline-form" method="post" action="{{ url_for('admin_movie_delete', movie_id=movie.id) }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button class="btn btn-sm btn-outline-danger" type="submit" data-confirm="Delete this movie?">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5" class="text-center text-secondary">No movies added yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

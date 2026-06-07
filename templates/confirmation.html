@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Booking Confirmed | MovieBook{% endblock %}
+
+{% block content %}
+<section class="content-section">
+    <div class="container">
+        <div class="ticket">
+            <div class="ticket-main">
+                <p class="section-kicker">Booking confirmed</p>
+                <h1>{{ booking.show.movie.title }}</h1>
+                <p>{{ booking.show.theater.name }}, {{ booking.show.theater.city }}</p>
+                <div class="ticket-grid">
+                    <div>
+                        <span>Date</span>
+                        <strong>{{ booking.show.show_date|show_date }}</strong>
+                    </div>
+                    <div>
+                        <span>Time</span>
+                        <strong>{{ booking.show.show_time|show_time }}</strong>
+                    </div>
+                    <div>
+                        <span>Seats</span>
+                        <strong>{{ booking.seat_label }}</strong>
+                    </div>
+                    <div>
+                        <span>Total</span>
+                        <strong>{{ booking.total_amount|currency }}</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="ticket-side">
+                <span>Booking ID</span>
+                <strong>{{ booking.booking_code }}</strong>
+                <small>{{ booking.booked_at.strftime("%d %b %Y, %I:%M %p") }}</small>
+            </div>
+        </div>
+        <div class="actions-row">
+            <a class="btn btn-outline-light" href="{{ url_for('dashboard') }}">View dashboard</a>
+            <a class="btn btn-brand" href="{{ url_for('index') }}">Book more tickets</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | MovieBook{% endblock %}
+
+{% block content %}
+<section class="admin-shell">
+    <div class="container">
+        {% include "admin/_nav.html" %}
+        <div class="admin-heading">
+            <div>
+                <p class="section-kicker">Admin dashboard</p>
+                <h1>Operations overview</h1>
+            </div>
+            <a class="btn btn-brand" href="{{ url_for('admin_show_add') }}">Add show</a>
+        </div>
+
+        <div class="stat-grid">
+            <div><strong>{{ stats.movies }}</strong><span>Movies</span></div>
+            <div><strong>{{ stats.theaters }}</strong><span>Theaters</span></div>
+            <div><strong>{{ stats.shows }}</strong><span>Shows</span></div>
+            <div><strong>{{ stats.bookings }}</strong><span>Bookings</span></div>
+            <div><strong>{{ stats.users }}</strong><span>Users</span></div>
+        </div>
+
+        <div class="table-panel">
+            <div class="panel-title">
+                <h2>Recent bookings</h2>
+                <a href="{{ url_for('admin_bookings') }}">View all</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>User</th>
+                            <th>Movie</th>
+                            <th>Seats</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in recent_bookings %}
+                        <tr>
+                            <td>{{ booking.booking_code }}</td>
+                            <td>{{ booking.user.name }}</td>
+                            <td>{{ booking.show.movie.title }}</td>
+                            <td>{{ booking.seat_label }}</td>
+                            <td>{{ booking.total_amount|currency }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5" class="text-center text-secondary">No bookings yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

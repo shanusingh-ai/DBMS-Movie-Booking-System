@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}{{ movie.title }} | MovieBook{% endblock %}
+
+{% block content %}
+<section class="movie-detail-hero">
+    <div class="container">
+        <div class="movie-detail-grid">
+            <img class="detail-poster" src="{{ movie.poster_url }}" alt="{{ movie.title }} poster">
+            <div class="detail-copy">
+                <div class="detail-badges">
+                    <span><i class="bi bi-star-fill"></i> {{ "%.1f"|format(movie.rating or 0) }}</span>
+                    <span>{{ movie.release_year }}</span>
+                    <span>{{ movie.duration }}</span>
+                </div>
+                <h1>{{ movie.title }}</h1>
+                <p class="movie-plot">{{ movie.plot }}</p>
+                <div class="detail-list">
+                    <span>{{ movie.genre }}</span>
+                    <span>{{ movie.language }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="toolbar-row">
+            <div>
+                <p class="section-kicker">Shows</p>
+                <h2>Choose a theater and time</h2>
+            </div>
+            {% if cities %}
+            <div class="city-tabs" role="list">
+                <button class="active" type="button" data-city-filter="all">All</button>
+                {% for city in cities %}
+                    <button type="button" data-city-filter="{{ city }}">{{ city }}</button>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if shows %}
+        <div class="show-list">
+            {% for show in shows %}
+            <article class="show-item" data-city="{{ show.theater.city }}">
+                <div>
+                    <h3>{{ show.theater.name }}</h3>
+                    <p>{{ show.theater.address }}, {{ show.theater.city }}</p>
+                    <div class="show-meta">
+                        <span><i class="bi bi-calendar-event"></i> {{ show.show_date|show_date }}</span>
+                        <span><i class="bi bi-clock"></i> {{ show.show_time|show_time }}</span>
+                        <span><i class="bi bi-ticket"></i> {{ show.available_seat_count }} seats left</span>
+                    </div>
+                </div>
+                <div class="show-price">
+                    <strong>{{ show.price|currency }}</strong>
+                    <a class="btn btn-brand" href="{{ url_for('booking', show_id=show.id) }}">Select seats</a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-calendar-x"></i>
+            <h2>No shows scheduled</h2>
+            <p>Check back later or add show timings from the admin panel.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

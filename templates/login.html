@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Login | MovieBook{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-panel">
+        <p class="section-kicker">Customer login</p>
+        <h1>Welcome back</h1>
+        <form method="post" class="stacked-form" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label>
+                Email
+                <input class="form-control" type="email" name="email" value="{{ form.email if form else '' }}" required>
+            </label>
+            <label>
+                Password
+                <input class="form-control" type="password" name="password" required>
+            </label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                <label class="form-check-label" for="remember">Remember me</label>
+            </div>
+            <button class="btn btn-brand w-100" type="submit">Login</button>
+        </form>
+        <div class="auth-switch">
+            <span>New here?</span>
+            <a href="{{ url_for('signup') }}">Create an account</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
