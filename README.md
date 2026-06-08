@@ -1,81 +1,146 @@
-# Online Movie Ticket Booking System
+# 🎬 Online Movie Ticket Booking System
 
-A complete Flask and MySQL movie ticket booking web application with customer authentication, admin management, API-backed movie search, seat selection, and booking history.
+A complete **Flask + MySQL** movie ticket booking web application with customer authentication, admin management, API-backed movie search, seat selection, and booking history.
 
-## Features
+---
 
-- Responsive dark UI built with Bootstrap, custom CSS, and JavaScript
-- Movie cards, search, genre filters, details pages, and poster-first layout
-- Customer signup/login with hashed passwords and Flask-Login sessions
-- Admin login with movie, theater, show, booking, and user management
-- MySQL schema with primary keys, foreign keys, and unique seat locking
-- Seat picker that prevents double booking through a database constraint
-- Flash messages, validation, loading animation, and mobile-friendly pages
-- Optional TMDb or OMDb integration through environment variables
+## ✨ Features
 
-## Backend
+* 🎨 Responsive dark UI built with Bootstrap, custom CSS, and JavaScript
+* 🎥 Movie cards, search, genre filters, details pages, and poster-first layout
+* 🔐 Customer signup/login with hashed passwords and Flask-Login sessions
+* 👨‍💼 Admin login with movie, theater, show, booking, and user management
+* 🗄️ MySQL schema with primary keys, foreign keys, and unique seat locking
+* 💺 Seat picker that prevents double booking through a database constraint
+* ⚡ Flash messages, validation, loading animation, and mobile-friendly pages
+* 🌐 Optional TMDb or OMDb integration through environment variables
 
-The Flask app uses an app factory in `app.py`, routes in `routes.py`, models in `models.py`, and environment configuration in `config.py`. SQLAlchemy is used with a MySQL connection string, which keeps database access parameterized and avoids SQL injection from raw string queries.
+---
 
-## Frontend
+## ⚙️ Backend
 
-Templates live in `templates/`, CSS in `static/css/style.css`, and JavaScript in `static/js/`. The UI uses Bootstrap 5 plus custom styling for movie cards, hover states, dashboards, and the seat map.
+The Flask app uses:
 
-## Database
+* 🚀 `app.py` – Application Factory
+* 🔗 `routes.py` – Application Routes
+* 🗃️ `models.py` – Database Models
+* 🔧 `config.py` – Environment Configuration
 
-SQL files are in `database/`:
+SQLAlchemy is used with a MySQL connection string, keeping database access parameterized and protected against SQL injection attacks.
 
-- `schema.sql` creates the MySQL database and tables.
-- `dummy_data.sql` inserts demo users, movies, theaters, shows, and one sample booking.
+---
 
-Main tables:
+## 🎨 Frontend
 
-- `users`
-- `admins`
-- `movies`
-- `theaters`
-- `shows`
-- `bookings`
-- `booking_seats`
+Frontend resources are organized as:
 
-`booking_seats` has a unique constraint on `(show_id, seat_number)`, so the same seat cannot be booked twice for the same show.
+* 📄 Templates → `templates/`
+* 🎨 CSS → `static/css/style.css`
+* ⚡ JavaScript → `static/js/`
 
-## Authentication
+The UI uses Bootstrap 5 along with custom styling for:
 
-Passwords are hashed with Werkzeug. Flask-Login stores sessions for both user and admin accounts. Customer routes and admin routes use separate decorators, so a logged-in admin cannot accidentally book tickets as a customer account.
+* 🎬 Movie Cards
+* ✨ Hover Effects
+* 📊 Dashboards
+* 💺 Interactive Seat Map
 
-Demo accounts:
+---
 
-- User: `user@moviebook.local` / `User@123`
-- Admin: `admin@moviebook.local` / `Admin@123`
+## 🗄️ Database
 
-## Booking System
+SQL files are located inside `database/`:
 
-Customers choose a movie, select a show, pick available seats, and confirm booking. The backend validates seat existence, quantity, availability, and duplicate selections before writing the booking.
+* 📜 `schema.sql` – Creates the MySQL database and tables
+* 📥 `dummy_data.sql` – Inserts demo users, movies, theaters, shows, and bookings
 
-## Setup
+### Main Tables
 
-1. Create and activate a virtual environment.
+* 👤 `users`
+* 👨‍💼 `admins`
+* 🎬 `movies`
+* 🏢 `theaters`
+* 🎟️ `shows`
+* 📑 `bookings`
+* 💺 `booking_seats`
+
+### Seat Protection
+
+`booking_seats` includes a unique constraint on:
+
+(show_id, seat_number)
+
+✅ Ensures the same seat cannot be booked twice for the same show.
+
+---
+
+## 🔑 Authentication
+
+* 🔒 Passwords are hashed using Werkzeug
+* 🍪 Flask-Login manages user sessions
+* 👥 Separate decorators protect customer and admin routes
+
+This prevents a logged-in admin from accidentally booking tickets as a customer.
+
+### Demo Accounts
+
+#### 👤 Customer
+
+Email: `user@moviebook.local`
+
+Password: `User@123`
+
+#### 👨‍💼 Admin
+
+Email: `admin@moviebook.local`
+
+Password: `Admin@123`
+
+---
+
+## 🎟️ Booking System
+
+Customers can:
+
+1. 🎬 Choose a movie
+2. 🕒 Select a show
+3. 💺 Pick available seats
+4. ✅ Confirm booking
+
+The backend validates:
+
+* ✔️ Seat existence
+* ✔️ Seat quantity
+* ✔️ Seat availability
+* ✔️ Duplicate selections
+
+before creating the booking.
+
+---
+
+## 🚀 Setup
+
+### 1️⃣ Create and Activate Virtual Environment
 
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
 ```
 
-2. Install dependencies.
+### 2️⃣ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Create the MySQL database.
+### 3️⃣ Create MySQL Database
 
 ```bash
 mysql -u root -p < database/schema.sql
 mysql -u root -p < database/dummy_data.sql
 ```
 
-4. Configure environment variables.
+### 4️⃣ Configure Environment Variables
 
 ```bash
 copy .env.example .env
@@ -83,59 +148,98 @@ copy .env.example .env
 
 Update `DATABASE_URL` in `.env` with your MySQL username and password.
 
-5. Run the application.
+### 5️⃣ Run the Application
 
 ```bash
 flask --app app.py run --debug
 ```
 
-Open `http://127.0.0.1:5000`.
+🌍 Open:
 
-## Alternative Demo Seeding
+```text
+http://127.0.0.1:5000
+```
 
-You can also let Flask create tables and seed demo records:
+---
+
+## 🌱 Alternative Demo Seeding
+
+You can also create tables and insert demo records directly through Flask:
 
 ```bash
 flask --app app.py init-db
 flask --app app.py seed-demo
 ```
 
-## OMDb API
+---
 
-The app runs with local dummy data by default. To fetch movie data dynamically, add one of these keys to `.env`:
+## 🎥 OMDb API Integration
+
+The application works with local demo data by default.
+
+To fetch movie data dynamically, add your API key inside `.env`:
 
 ```bash
 OMDB_API_KEY=your_omdb_key
 ```
 
-## Project Structure
+---
+
+## 📂 Project Structure
 
 ```text
 .
-├── app.py
-├── config.py
-├── models.py
-├── routes.py
-├── requirements.txt
-├── README.md
-├── database/
-│   ├── schema.sql
-│   └── dummy_data.sql
-├── static/
-│   ├── css/
-│   │   └── style.css
-│   ├── js/
-│   │   ├── main.js
-│   │   └── booking.js
-│   └── images/
-└── templates/
-    ├── base.html
-    ├── index.html
-    ├── login.html
-    ├── signup.html
-    ├── movie_details.html
-    ├── booking.html
-    ├── confirmation.html
-    ├── dashboard.html
-    └── admin/
+├── 📄 app.py
+├── ⚙️ config.py
+├── 🗃️ models.py
+├── 🔗 routes.py
+├── 📋 requirements.txt
+├── 📖 README.md
+├── 📁 database/
+│   ├── 📜 schema.sql
+│   └── 📥 dummy_data.sql
+├── 📁 static/
+│   ├── 📁 css/
+│   │   └── 🎨 style.css
+│   ├── 📁 js/
+│   │   ├── ⚡ main.js
+│   │   └── ⚡ booking.js
+│   └── 📁 images/
+└── 📁 templates/
+    ├── 📄 base.html
+    ├── 🏠 index.html
+    ├── 🔑 login.html
+    ├── 📝 signup.html
+    ├── 🎬 movie_details.html
+    ├── 💺 booking.html
+    ├── ✅ confirmation.html
+    ├── 📊 dashboard.html
+    └── 📁 admin/
 ```
+
+---
+
+## 🛠️ Tech Stack
+
+* 🐍 Python
+* 🌶️ Flask
+* 🗄️ MySQL
+* 🔗 SQLAlchemy
+* 🎨 Bootstrap 5
+* ⚡ JavaScript
+* 🔐 Flask-Login
+* 🌐 OMDb API
+
+---
+
+## 👨‍💻 Role & Contributions
+
+**Team Leader & Full-Stack Developer**
+
+* Led the project team throughout the development lifecycle.
+* Designed and developed the complete Flask + MySQL application architecture.
+* Implemented customer authentication, admin dashboard, movie management, and booking workflows.
+* Designed the database schema, relationships, and seat-booking system.
+* Developed responsive frontend interfaces using Bootstrap, CSS, and JavaScript.
+* Integrated API-based movie search and handled backend business logic.
+* Performed testing, debugging, and deployment setup.
