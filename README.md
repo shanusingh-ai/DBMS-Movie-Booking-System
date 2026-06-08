@@ -100,16 +100,13 @@ flask --app app.py init-db
 flask --app app.py seed-demo
 ```
 
-## OMDb or TMDb API
+## OMDb API
 
 The app runs with local dummy data by default. To fetch movie data dynamically, add one of these keys to `.env`:
 
 ```bash
-TMDB_API_KEY=your_tmdb_key
 OMDB_API_KEY=your_omdb_key
 ```
-
-TMDb is used first when both keys are present.
 
 ## Project Structure
 
