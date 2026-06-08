@@ -1,19 +1,19 @@
 # 🎬 Online Movie Ticket Booking System
 
-A complete **Flask + MySQL** movie ticket booking web application with customer authentication, admin management, API-backed movie search, seat selection, and booking history.
+A complete **Flask + MySQL** movie ticket booking web application with customer authentication, admin management, API-backed movie search, seat selection and booking history.
 
 ---
 
 ## ✨ Features
 
-* 🎨 Responsive dark UI built with Bootstrap, custom CSS, and JavaScript
-* 🎥 Movie cards, search, genre filters, details pages, and poster-first layout
+* 🎨 Responsive dark UI built with Bootstrap, custom CSS and JavaScript
+* 🎥 Movie cards, search, genre filters, details pages and poster-first layout
 * 🔐 Customer signup/login with hashed passwords and Flask-Login sessions
-* 👨‍💼 Admin login with movie, theater, show, booking, and user management
-* 🗄️ MySQL schema with primary keys, foreign keys, and unique seat locking
+* 👨‍💼 Admin login with movie, theater, show, booking and user management
+* 🗄️ MySQL schema with primary keys, foreign keys and unique seat locking
 * 💺 Seat picker that prevents double booking through a database constraint
-* ⚡ Flash messages, validation, loading animation, and mobile-friendly pages
-* 🌐 Optional TMDb or OMDb integration through environment variables
+* ⚡ Flash messages, validation, loading animation and mobile-friendly pages
+* 🌐 OMDb integration through environment variables
 
 ---
 
@@ -238,8 +238,8 @@ OMDB_API_KEY=your_omdb_key
 
 * Led the project team throughout the development lifecycle.
 * Designed and developed the complete Flask + MySQL application architecture.
-* Implemented customer authentication, admin dashboard, movie management, and booking workflows.
-* Designed the database schema, relationships, and seat-booking system.
-* Developed responsive frontend interfaces using Bootstrap, CSS, and JavaScript.
+* Implemented customer authentication, admin dashboard, movie management and booking workflows.
+* Designed the database schema, relationships and seat-booking system.
+* Developed responsive frontend interfaces using Bootstrap, CSS and JavaScript.
 * Integrated API-based movie search and handled backend business logic.
-* Performed testing, debugging, and deployment setup.
+* Performed testing, debugging and deployment setup.
