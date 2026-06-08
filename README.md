@@ -243,3 +243,8 @@ OMDB_API_KEY=your_omdb_key
 * Developed responsive frontend interfaces using Bootstrap, CSS and JavaScript.
 * Integrated API-based movie search and handled backend business logic.
 * Performed testing, debugging and deployment setup.
+
+---
+
+GitHub: https://github.com/shanusingh-ai
+⭐ If you found this project useful, consider giving it a star on GitHub.
