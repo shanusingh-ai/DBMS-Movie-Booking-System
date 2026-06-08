@@ -246,5 +246,8 @@ OMDB_API_KEY=your_omdb_key
 
 ---
 
-GitHub: https://github.com/shanusingh-ai
-⭐ If you found this project useful, consider giving it a star on GitHub.
+## 🌟 Support
+
+⭐ If you found this project useful, consider giving it a star.
+
+🔗 GitHub Profile: https://github.com/shanusingh-ai
